@@ -8,7 +8,9 @@
 3. Inside the base directory, create a virtual environment: `virtualenv env --python=python3`
 4. Start up the virtual environment: `source env/bin/activate`
 5. Install python packages: `pip install -r requirements.txt`
-6. Start the server in development mode: `python web/app.py`
+6. Start the redis server: `redis-server --port <port_num>`
+7. Start Worker: `python worker.py`
+8. Start Flask server: `python app.py`
 ## Releasing to Production
 1. Install Heroku ([learn more](https://www.heroku.com/what)): `sudo snap install --classic heroku`
 2. Login to Heroku: `heroku login`
