@@ -1,0 +1,7 @@
+pandas
+googlemaps
+python-dotenv
+Flask
+gunicorn
+redis
+rq
