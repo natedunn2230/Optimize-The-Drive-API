@@ -1,6 +1,7 @@
 import json
 
 from flask import Flask, request, render_template, jsonify
+from flask_cors import CORS
 from worker import conn
 from rq import Queue
 from rq.job import Job, NoSuchJobError
@@ -8,6 +9,8 @@ from config import GOOGLE_API_KEY
 from jobs import compute_path
 
 app = Flask(__name__)
+
+CORS(app)
 
 
 q = Queue(connection=conn)
