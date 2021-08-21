@@ -5,7 +5,6 @@ from flask_cors import CORS
 from worker import conn
 from rq import Queue
 from rq.job import Job, NoSuchJobError
-from config import GOOGLE_API_KEY
 from jobs import compute_path
 
 app = Flask(__name__)
@@ -38,8 +37,9 @@ def optimize():
         # check if json data is valid for operations
         if not isinstance(locations, list):
             return jsonify({"err": "Value for 'locations' must be array."}), 400
-        if len(locations) < 5:
-            return jsonify({"err": "Five or more locations are required for optimization."}), 400
+
+        if len(locations) < 2 or len(locations) > 5:
+            return jsonify({"err": "Between two and five locations are required for optimization."}), 400
 
         job = q.enqueue_call(func=compute_path, args=(locations,), result_ttl=600)
 
@@ -51,7 +51,7 @@ def optimize():
         return jsonify({"err": "An error occurred during optimization."}), 400
 
     return jsonify({
-        "msg": "Optimization started. Poll /optimize-result/<id> periodically for the result",
+        "msg": "Optimization started. Poll /optimize/result/<id> periodically for the result",
         "id": job.id
     }), 202
 
@@ -70,7 +70,7 @@ def get_results(job_id):
         elif job.is_failed:
             return jsonify({
                 "status": "failed"
-            }), 500
+            }), 200
         else:
             return jsonify({
                 "status": "in-progress"

@@ -1,16 +1,17 @@
 # Road Trip Optimizer API
 *Thanks to [rhiever](https://github.com/rhiever/Data-Analysis-and-Machine-Learning-Projects/blob/master/optimal-road-trip/Computing%20the%20optimal%20road%20trip%20across%20the%20U.S..ipynb) for his open source software to greatly aid in the development of this software [© Randal S. Olson](http://www.randalolson.com/)* 
 ## Setup
-**Note:** *This application is intended for development on ubuntu / linux systems* 
+**Note:** This application is intended for development on Unix based systems
 
-1. Create a *.env* file like *example.env* and fill out variable values.
-2. Install virtualenv for a python virtual environment ([learn more](https://virtualenv.pypa.io/en/latest/)): `pip install virtualenv`
-3. Inside the base directory, create a virtual environment: `virtualenv env --python=python3`
-4. Start up the virtual environment: `source env/bin/activate`
-5. Install python packages: `pip install -r requirements.txt`
-6. Start the redis server: `redis-server --port <port_num>`
-7. Start Worker: `python worker.py`
-8. Start Flask server: `python app.py`
+1. Install virtualenv for a python virtual environment ([learn more](https://virtualenv.pypa.io/en/latest/)): `pip install virtualenv`
+2. Inside the base directory, create a virtual environment: `virtualenv venv --python=python3 (or virtualenv venv for Mac)`
+3. Start up the virtual environment: `source venv/bin/activate (to deactivate environment: deactivate)`
+4. Install python packages: `pip install -r requirements.txt`
+5. Create *.dev.env* file in parent directory, referencing *example.env*
+6. If on Mac, run this (there are issues with process forking): `export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES`
+7. Start the redis server: `redis-server --port <port_num>`
+8. Start Worker: `python worker.py`
+9. Start Flask server: `python app.py`
 ## Releasing to Production
 1. Install Heroku ([learn more](https://www.heroku.com/what)): `sudo snap install --classic heroku`
 2. Login to Heroku: `heroku login`

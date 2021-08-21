@@ -1,4 +1,3 @@
-import os
 import config
 
 import redis
@@ -6,7 +5,7 @@ from rq import Worker, Queue, Connection
 
 listen = ['default']
 
-redis_url = config.REDISTOGO_URL
+redis_url = config.REDIS_URL
 
 conn = redis.from_url(redis_url)
 

@@ -1,6 +1,7 @@
 .vscode/
 env/
 my-waypoints-dist-dur.tsv
-.env
+.dev.env
 *.pyc
 __pycache__
+dump.rdb
