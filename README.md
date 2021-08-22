@@ -13,7 +13,7 @@
 8. Start Worker: `python worker.py`
 9. Start Flask server: `python app.py`
 ## Releasing to Production
-1. Install Heroku ([learn more](https://www.heroku.com/what)): `sudo snap install --classic heroku`
+1. Install Heroku CLI ([learn more](https://devcenter.heroku.com/articles/heroku-cli))
 2. Login to Heroku: `heroku login`
 3. Create Heroku Application: `heroku create <app-name>`
 4. Add config vars (same that are in *.env*) on Heroku's Website. This can be found under your application's settings. Alternatively, you can add them on the [command line](https://devcenter.heroku.com/articles/config-vars) as well.
