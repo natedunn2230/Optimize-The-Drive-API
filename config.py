@@ -9,7 +9,7 @@ is_prod = os.environ.get("ON_HEROKU")
 
 # load correct values based on production or not
 if is_prod:
-    FLASK_SECRET_KEY=os.get("FLASK_SECRET_KEY")
+    FLASK_SECRET_KEY=os.getenv("FLASK_SECRET_KEY")
     HERE_API_KEY=os.getenv("HERE_API_KEY")
     REDIS_URL=os.getenv("REDIS_URL")
 else:
