@@ -1,24 +1,16 @@
+from app import app
+from flask import jsonify, render_template, request
+from rq.job import Job, NoSuchJobError
+from worker import conn, queue
+from .jobs import compute_path
 import json
 
-from flask import Flask, request, render_template, jsonify
-from flask_cors import CORS
-from worker import conn
-from rq import Queue
-from rq.job import Job, NoSuchJobError
-from jobs import compute_path
-
-app = Flask(__name__)
-
-CORS(app)
-
-
-q = Queue(connection=conn)
-
-
+# ENTRY ROUTE
 @app.route("/")
 def entry():
     return render_template("welcome.html"), 200
 
+# OPTIMIZER ROUTES
 @app.route("/optimize", methods=["POST"])
 def optimize():
     """
@@ -28,22 +20,20 @@ def optimize():
     try:
         data = json.loads(request.data)
 
-        # check if there is any json data
         if len(data) == 0:
             return jsonify({"err": "Key 'locations' is required for optimization."}), 400
-
         locations = data["locations"]
 
-        # check if json data is valid for operations
         if not isinstance(locations, list):
             return jsonify({"err": "Value for 'locations' must be array."}), 400
 
         if len(locations) < 2 or len(locations) > 5:
             return jsonify({"err": "Between two and five locations are required for optimization."}), 400
 
-        job = q.enqueue_call(func=compute_path, args=(locations,), result_ttl=600)
+        job = queue.enqueue_call(func=compute_path, args=(locations,), result_ttl=600)
 
     except json.JSONDecodeError as jsonError:
+        print(jsonError)
         return jsonify({"err": "Invalid json syntax."}), 500
 
     except Exception as error:
@@ -80,5 +70,5 @@ def get_results(job_id):
             "msg": "job id does not exist"
         }), 404
 
-if __name__ == "__main__":
-    app.run()
+
+# LOCATION QUERY ROUTES

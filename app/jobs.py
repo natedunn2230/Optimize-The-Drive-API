@@ -1,5 +1,5 @@
-from optimizer.distance_finder import find_distances
-from optimizer.path_finder import run_genetic_algorithm
+from .optimizer.distance_finder import find_distances
+from .optimizer.path_finder import run_genetic_algorithm
 from config import HERE_API_KEY
 
 
