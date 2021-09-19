@@ -3,6 +3,7 @@ from flask import jsonify, render_template, request
 from rq.job import Job, NoSuchJobError
 from worker import conn, queue
 from .jobs import compute_path
+from .requests import get_address_by_name, get_address_by_location
 import json
 
 # ENTRY ROUTE
@@ -72,3 +73,34 @@ def get_results(job_id):
 
 
 # LOCATION QUERY ROUTES
+@app.route("/locations", methods=["GET"])
+def get_location():
+    """
+        Query location data by coord or name. If both types are given,
+        then query by name is given priority
+    """
+    name = request.args.get("name")
+    lat = request.args.get("lat")
+    lng = request.args.get("lng")
+    limit = request.args.get("limit")
+
+    if name:
+        loc_req = get_address_by_name(name, limit)
+        try:
+            format_data = [{"name": loc["display_name"], "lat": loc["lat"], "lng": loc["lon"]} for loc in loc_req] 
+            return jsonify({"locations": format_data}), 200
+        except (KeyError, TypeError):
+            return jsonify({"locations": []}), 200
+    elif lat and lng:
+        loc_req = get_address_by_location(lat, lng)
+        try:
+            format_data = {
+                "name": loc_req["display_name"], 
+                "lat": loc_req["lat"],
+                "lng": loc_req["lon"]
+            }
+            return jsonify({"locations": [format_data]}), 200
+        except KeyError:
+            return jsonify({"locations": []}), 200
+    else:
+        return jsonify({"msg": "parameters 'name' or 'lat'/'lng' required"}), 400

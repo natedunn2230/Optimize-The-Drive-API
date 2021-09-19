@@ -3,7 +3,7 @@ from itertools import combinations
 from .path_finder import run_genetic_algorithm
 from ..requests import get_distance_matrix
 
-def find_distances(all_waypoints, api_key):
+def find_distances(all_waypoints):
     """
         This function Finds the distance between each waypoint (by calling Google's Distance Matrix API)
         and stores the distance and duration between the two in a file.
@@ -14,7 +14,7 @@ def find_distances(all_waypoints, api_key):
 
     for (waypoint1, waypoint2) in combinations(all_waypoints, 2):
         try:
-            response = get_distance_matrix(api_key, [waypoint1, waypoint2])
+            response = get_distance_matrix([waypoint1, waypoint2])
 
             ##"distance" is in meters
             print(response)
