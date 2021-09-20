@@ -39,7 +39,7 @@ def optimize():
 
     except Exception as error:
         print(error.with_traceback)
-        return jsonify({"err": "An error occurred during optimization."}), 400
+        return jsonify({"err": "An error occurred during optimization. {}".format(error)}), 500
 
     return jsonify({
         "msg": "Optimization started. Poll /optimize/result/<id> periodically for the result",

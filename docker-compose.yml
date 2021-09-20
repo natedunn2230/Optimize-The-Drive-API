@@ -1,0 +1,24 @@
+version: '3'
+services:
+  api:
+    build: .
+    volumes:
+      - .:/src
+    entrypoint: ["python"]
+    command: ["run.py"]
+    env_file:
+      - ".dev.env"
+    ports:
+      - "5000:5000"
+
+  worker:
+    build: .
+    entrypoint: ["python"]
+    command: ["worker.py"]
+    env_file:
+      - ".dev.env"
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:alpine"

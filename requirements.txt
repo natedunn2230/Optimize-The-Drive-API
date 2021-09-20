@@ -1,8 +1,7 @@
 pandas
-googlemaps
-python-dotenv
 Flask
 flask-cors
 gunicorn
 redis
+requests
 rq

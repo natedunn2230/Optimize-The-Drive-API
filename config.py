@@ -1,8 +1,4 @@
 import os
-from dotenv import load_dotenv
-
-env_path = os.path.join(os.path.dirname(__file__), ".dev.env")
-load_dotenv(env_path)
 
 # vars have same name in dev and prod
 FLASK_SECRET_KEY=os.getenv("FLASK_SECRET_KEY")

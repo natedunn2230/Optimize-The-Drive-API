@@ -1,0 +1,4 @@
+build:
+  docker:
+    web: Dockerfile
+run: gunicorn -w 4 app:app
