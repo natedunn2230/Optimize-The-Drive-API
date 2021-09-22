@@ -98,7 +98,7 @@ def generate_random_population(pop_size):
         random_population.append(generate_random_agent())
     return random_population
     
-def run_genetic_algorithm(generations=20000, population_size=100):
+def run_genetic_algorithm(generations=1000, population_size=100):
     """
         The core of the Genetic Algorithm.
         

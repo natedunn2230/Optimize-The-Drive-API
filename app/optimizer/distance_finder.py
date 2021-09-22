@@ -1,6 +1,5 @@
 # import googlemaps
 from itertools import combinations
-from .path_finder import run_genetic_algorithm
 from ..requests import get_distance_matrix
 
 def find_distances(all_waypoints):
